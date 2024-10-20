@@ -1,101 +1,73 @@
-import Image from "next/image";
+'use client'
+
+import { useEffect, useState } from "react";
+import CurrencyInput from 'react-currency-input-field';
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+	const [netto, setNetto] = useState<number | null | undefined>(0);
+	const [inchEuros, setInchEuros] = useState(27);
+	const [price, setPrice] = useState<number | undefined>();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+	const options = [
+		{ value: 1, label: '13' },
+		{ value: 2, label: '14' },
+		{ value: 3, label: '15' },
+		{ value: 4, label: '16' },
+		{ value: 5, label: '17' },
+		{ value: 6, label: '18' },
+		{ value: 7, label: '19' },
+	]
+
+	useEffect(() => {
+		if (!netto || !inchEuros) {
+			setPrice(undefined);
+		} else {
+			setPrice(netto + inchEuros);
+		}
+	}, [netto, inchEuros]);
+
+	return (
+		<div>
+			<div className="m-10 flex flex-col text-3xl">
+				<h1 className="mb-10" >Jaap&apos;s banden berekener</h1>
+				<div className="flex gap-10">
+					<label htmlFor="netto">Netto</label>
+					<CurrencyInput
+						id="netto"
+						name="netto"
+						placeholder="Netto banden prijs"
+						decimalsLimit={2}
+						onValueChange={(value, name, values) => setNetto(values?.float)}
+						className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+					/>
+				</div>
+				<div className="flex gap-14">
+					<label htmlFor="inch">Inch</label>
+					<select
+						className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+						value={inchEuros}
+						onChange={e => setInchEuros(Number(e.target.value))}
+					>
+						{options.map(option => (
+							<option key={option.value} value={option.value}>{option.label}</option>
+						))}
+					</select>
+				</div>
+			</div>
+			<div className="flex flex-col gap-3 m-10 text-3xl">
+				<p
+					className="cursor-pointer"
+					onClick={() => { navigator.clipboard.writeText((price ?? 0).toFixed(2)) }}
+				>
+					Zonder BTW: {price?.toFixed(2)}
+				</p>
+				<p
+					onClick={() => { navigator.clipboard.writeText((Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2)) }}
+					className="cursor-pointer"
+				>
+					Met BTW: {(Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2)}
+				</p>
+			</div>
+		</div>
+	);
 }
