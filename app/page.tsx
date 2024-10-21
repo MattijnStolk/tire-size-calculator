@@ -59,13 +59,13 @@ export default function Home() {
 					className="cursor-pointer"
 					onClick={() => { navigator.clipboard.writeText((price ?? 0).toFixed(2)) }}
 				>
-					Zonder BTW: {price?.toFixed(2)}
+					Zonder BTW en zonder toeslag: <span className="font-bold">{price?.toFixed(2)}</span>
 				</p>
 				<p
 					onClick={() => { navigator.clipboard.writeText((Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2)) }}
 					className="cursor-pointer"
 				>
-					Met BTW: {(Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2)}
+					Met BTW en toeslag: <span className="font-bold">{(Math.round((((price ?? 0) + 1.7 )* 1.21) * 100) / 100).toFixed(2)}</span>
 				</p>
 			</div>
 		</div>
