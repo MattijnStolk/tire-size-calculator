@@ -5,7 +5,7 @@ import CurrencyInput from 'react-currency-input-field';
 
 export default function Home() {
 	const [netto, setNetto] = useState<number | null | undefined>(0);
-	const [inchEuros, setInchEuros] = useState(27);
+	const [inchEuros, setInchEuros] = useState(24);
 	const [price, setPrice] = useState<number | undefined>();
 
 	const options = [
