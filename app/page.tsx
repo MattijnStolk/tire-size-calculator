@@ -9,13 +9,13 @@ export default function Home() {
 	const [price, setPrice] = useState<number | undefined>();
 
 	const options = [
-		{ value: 1, label: '13' },
-		{ value: 2, label: '14' },
-		{ value: 3, label: '15' },
-		{ value: 4, label: '16' },
-		{ value: 5, label: '17' },
-		{ value: 6, label: '18' },
-		{ value: 7, label: '19' },
+		{ value: 24, label: '13' },
+		{ value: 26, label: '14' },
+		{ value: 32, label: '15' },
+		{ value: 37, label: '16' },
+		{ value: 42, label: '17' },
+		{ value: 47, label: '18' },
+		{ value: 52, label: '19' },
 	]
 
 	useEffect(() => {
