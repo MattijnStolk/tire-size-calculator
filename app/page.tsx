@@ -1,7 +1,8 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import CurrencyInput from 'react-currency-input-field';
+import Link from "next/link";
 
 export default function Home() {
 	const [netto, setNetto] = useState<number | null | undefined>(0);
@@ -27,7 +28,7 @@ export default function Home() {
 	}, [netto, inchEuros]);
 
 	return (
-		<div>
+		<Suspense>
 			<div className="m-10 flex flex-col text-3xl">
 				<h1 className="mb-10" >Jaap&apos;s banden berekener</h1>
 				<div className="flex gap-10">
@@ -70,6 +71,9 @@ export default function Home() {
 					Met BTW en toeslag: <span className="font-bold">{(Math.round((((price ?? 0) + 1.7 )* 1.21) * 100) / 100).toFixed(2)}</span>
 				</p>
 			</div>
-		</div>
+            <div className="m-10 text-2xl hover:pointer hover:text-blue-800 transition-all mt-5">
+                <Link href={'/koffietijd'}>Is het al koffietijd?</Link>
+            </div>
+		</Suspense>
 	);
 }
