@@ -29,51 +29,53 @@ export default function Home() {
 
 	return (
 		<Suspense>
-			<div className="m-10 flex flex-col text-3xl">
-				<h1 className="mb-10" >Jaap&apos;s banden berekener</h1>
-				<div className="flex gap-10">
-					<label htmlFor="netto">Netto</label>
-					<CurrencyInput
-						id="netto"
-						name="netto"
-						placeholder="Netto banden prijs"
-						decimalsLimit={2}
-						decimalSeparator="."
-						groupSeparator=","
-						onValueChange={(value, name, values) => setNetto(values?.float)}
-						className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-					/>
+			<div className="my-10 flex flex-col items-center w-full text-3xl">
+				<div>
+					<h1 className="mb-10" >Jaap&apos;s banden berekener</h1>
+					<div className="flex gap-10">
+						<label htmlFor="netto">Netto</label>
+						<CurrencyInput
+							id="netto"
+							name="netto"
+							placeholder="Netto banden prijs"
+							decimalsLimit={2}
+							decimalSeparator="."
+							groupSeparator=","
+							onValueChange={(value, name, values) => setNetto(values?.float)}
+							className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+						/>
+					</div>
+					<div className="flex gap-14">
+						<label htmlFor="inch">Inch</label>
+						<select
+							className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+							value={inchEuros}
+							onChange={e => setInchEuros(Number(e.target.value))}
+						>
+							{options.map(option => (
+								<option key={option.value} value={option.value}>{option.label}</option>
+							))}
+						</select>
+					</div>
 				</div>
-				<div className="flex gap-14">
-					<label htmlFor="inch">Inch</label>
-					<select
-						className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-						value={inchEuros}
-						onChange={e => setInchEuros(Number(e.target.value))}
+				<div className="flex flex-col items-center w-full gap-3 my-10 text-3xl">
+					<p
+						className="cursor-pointer"
+						onClick={() => { navigator.clipboard.writeText((price ?? 0).toFixed(2).replace('.', ',')) }}
 					>
-						{options.map(option => (
-							<option key={option.value} value={option.value}>{option.label}</option>
-						))}
-					</select>
+						Zonder BTW en zonder toeslag: <span className="font-bold">{price?.toFixed(2)}</span>
+					</p>
+					<p
+						onClick={() => { navigator.clipboard.writeText((Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2).replace('.', ',')) }}
+						className="cursor-pointer"
+					>
+						Met BTW en toeslag: <span className="font-bold">{(Math.round((((price ?? 0) + 1.7 )* 1.21) * 100) / 100).toFixed(2)}</span>
+					</p>
+					<div className="my-10 text-2xl hover:pointer hover:text-blue-800 transition-all mt-5">
+						<Link href={'/koffietijd'}>Is het al koffietijd?</Link>
+					</div>
 				</div>
 			</div>
-			<div className="flex flex-col gap-3 m-10 text-3xl">
-				<p
-					className="cursor-pointer"
-					onClick={() => { navigator.clipboard.writeText((price ?? 0).toFixed(2).replace('.', ',')) }}
-				>
-					Zonder BTW en zonder toeslag: <span className="font-bold">{price?.toFixed(2)}</span>
-				</p>
-				<p
-					onClick={() => { navigator.clipboard.writeText((Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2).replace('.', ',')) }}
-					className="cursor-pointer"
-				>
-					Met BTW en toeslag: <span className="font-bold">{(Math.round((((price ?? 0) + 1.7 )* 1.21) * 100) / 100).toFixed(2)}</span>
-				</p>
-			</div>
-            <div className="m-10 text-2xl hover:pointer hover:text-blue-800 transition-all mt-5">
-                <Link href={'/koffietijd'}>Is het al koffietijd?</Link>
-            </div>
 		</Suspense>
 	);
 }

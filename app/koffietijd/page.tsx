@@ -50,7 +50,7 @@ const getTimeLeft = (nextBreak: { hour: number; minute: number }) => {
         timeString += `${minutesLeft} minute${minutesLeft > 1 ? 's' : ''}`;
     }
 
-    return timeString || 'Time is up!';
+    return timeString || 'Koffie tijd!!';
 };
 
 
