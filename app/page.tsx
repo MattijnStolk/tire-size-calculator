@@ -37,6 +37,8 @@ export default function Home() {
 						name="netto"
 						placeholder="Netto banden prijs"
 						decimalsLimit={2}
+						decimalSeparator="."
+						groupSeparator=","
 						onValueChange={(value, name, values) => setNetto(values?.float)}
 						className="bg-gray-700 border border-green-600 text-gray-50 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
 					/>
@@ -57,12 +59,12 @@ export default function Home() {
 			<div className="flex flex-col gap-3 m-10 text-3xl">
 				<p
 					className="cursor-pointer"
-					onClick={() => { navigator.clipboard.writeText((price ?? 0).toFixed(2)) }}
+					onClick={() => { navigator.clipboard.writeText((price ?? 0).toFixed(2).replace('.', ',')) }}
 				>
 					Zonder BTW en zonder toeslag: <span className="font-bold">{price?.toFixed(2)}</span>
 				</p>
 				<p
-					onClick={() => { navigator.clipboard.writeText((Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2)) }}
+					onClick={() => { navigator.clipboard.writeText((Math.round(((price ?? 0) * 1.21) * 100) / 100).toFixed(2).replace('.', ',')) }}
 					className="cursor-pointer"
 				>
 					Met BTW en toeslag: <span className="font-bold">{(Math.round((((price ?? 0) + 1.7 )* 1.21) * 100) / 100).toFixed(2)}</span>
